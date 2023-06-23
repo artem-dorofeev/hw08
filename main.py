@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta, date
-# from datetime import date
 
 list_users = (
     {"name": "Artem", "birthday": date(1979, 6, 28)},
@@ -19,8 +18,8 @@ list_users2 = (
 
 
 def get_period_birth() -> list:
-    current_date = datetime.now().date()
-    # current_date = datetime(year=2023, month=12, day=27)
+    # current_date = datetime.now().date()
+    current_date = datetime(year=2023, month=12, day=27)
     start = timedelta(days=(5 - current_date.weekday())) + current_date
     end = timedelta(days=7) + start
     list_period = []
@@ -35,25 +34,19 @@ def compare_date(list_users: list) -> list:
     list_peiod = get_period_birth()
     current_year = datetime.now().date()
     result_list = []
-    # if len(list_users) == 0:
-    #     return f'not users in list'
     for i in list_users:
         birth = i['birthday']
         user_birth = (birth.month, birth.day)
         if user_birth in list_peiod:
-
             if current_year.month > birth.month:
                 age = current_year.year - birth.year + 1
                 birth = birth.replace(year=current_year.year+1)
-
             else:
                 age = current_year.year - birth.year
                 birth = birth.replace(year=current_year.year)
             new_user_info = {"day": birth.day,
                              "name": i["name"], "birthday": birth, "age": age}
             result_list.append(new_user_info)
-
-    # print(result_list)
     return result_list
 
 
@@ -64,23 +57,31 @@ def get_birthdays_per_week(users: list) -> list:
         birth = i['birthday']
         temp_list = (birth.strftime("%A"), i["name"], i["age"])
         result_list.append(temp_list)
-        # result_list.append(
-        #     f'{birth.strftime("%A")} {i["name"]} age {i["age"]}')
-        # print(temp_list)
-    # print(result_list)
     return result_list
 
 
 def get_result_list(users: list) -> None:
-    finish_list = get_birthdays_per_week(users)
-    # finish_list.sort()
-    for i in finish_list:
-        if i[0] == "Saturday" or i[0] == "Sunday":
-            print(f'Monday {i[1]} age {i[2]}')
+    list_birth = get_birthdays_per_week(users)
+    mon_list = []
+    other_birth = []
+    for i in list_birth:
+        if i[0] == "Saturday" or i[0] == "Sunday" or i[0] == "Monday":
+            temp_str = f' {i[1]} ({i[2]})'
+            mon_list.append(temp_str)
         else:
-            print(f'{i[0]} {i[1]} age {i[2]}')
-        # print(f'{i[0]} {i[1]}')
-        # print(i)
+            temp_str = f'{i[0]} {i[1]} ({i[2]})'
+            other_birth.append(temp_str)
+
+    if len(mon_list) > 0:
+        monday_str = 'Monday'
+        for i in mon_list:
+            monday_str += i
+    print(monday_str)
+
+    if len(other_birth) > 0:
+        for i in other_birth:
+            print(i)
+
     return None
 
 
@@ -88,4 +89,4 @@ if __name__ == "__main__":
     # get_period_birth()
     # compare_date(list_users)
     # get_birthdays_per_week(list_users)
-    get_result_list(list_users)
+    get_result_list(list_users2)
