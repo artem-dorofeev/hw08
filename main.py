@@ -75,8 +75,10 @@ def get_result_list(users: list) -> None:
     finish_list = get_birthdays_per_week(users)
     # finish_list.sort()
     for i in finish_list:
-
-        print(f'{i[0]} {i[1]} age {i[2]}')
+        if i[0] == "Saturday" or i[0] == "Sunday":
+            print(f'Monday {i[1]} age {i[2]}')
+        else:
+            print(f'{i[0]} {i[1]} age {i[2]}')
         # print(f'{i[0]} {i[1]}')
         # print(i)
     return None
